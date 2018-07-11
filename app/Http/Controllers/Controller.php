@@ -3179,19 +3179,25 @@ class Controller extends BaseController
 					// Check, if new key fits the actual .env-key
 					if($entry[0] == $key){
 						// If yes, overwrite it with the new one
+                        $value = str_replace('"','',$value);
+                        $value = '"'.$value.'"';
 						$env[$env_key] = $key . "=" . $value;
                         $new = false;
 					} else {
+                        $env_value = str_replace('"','',$env_value);
+                        $env_value = '"'.$env_value.'"';
 						// If not, keep the old one
 						$env[$env_key] = $env_value;
 					}
 				}
                 if ($new == true) {
-				    $value = "'$value'";
+                    $value = str_replace('"','',$value);
+				    $value = '"'.$value.'"';
 					$env[$key] = $key . "=" . $value;
 				}
 			}
 			// Turn the array back to an String
+
 			$env = implode("\n", $env);
 			// And overwrite the .env with the new data
 			file_put_contents(base_path() . '/.env', $env);
