@@ -3187,6 +3187,7 @@ class Controller extends BaseController
 					}
 				}
                 if ($new == true) {
+				    $value = "'$value'";
 					$env[$key] = $key . "=" . $value;
 				}
 			}
@@ -16471,6 +16472,7 @@ class Controller extends BaseController
             $data1['smtp_pass'] = $credentials['access_token'];
             DB::table('practiceinfo')->where('practice_id', '=', $practice_id)->update($data1);
             $config['mail.password'] =  $credentials['access_token'];
+
             // $config = [
                 // 'mail.driver' => 'smtp',
                 // 'mail.host' => 'smtp.gmail.com',
@@ -16483,6 +16485,7 @@ class Controller extends BaseController
             // ];
             config($config);
             extract(Config::get('mail'));
+
             // $transport = Swift_SmtpTransport::newInstance($host, $port, 'ssl');
             // $transport->setAuthMode('XOAUTH2');
             // if (isset($encryption)) {
