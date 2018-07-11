@@ -311,9 +311,12 @@ class LoginController extends Controller {
 
             $credentials = $google->authenticate($_GET['code']);
 
-            $data['google_refresh_token'] = isset($credentials['refresh_token']) ? $credentials['refresh_token'] : $google->getRefreshToken() ;
+            $data['google_refresh_token'] = $google->getRefreshToken(); //isset($credentials['refresh_token']) ? $credentials['refresh_token'] : $google->getRefreshToken() ;
+
+            file_put_contents("/home/lt/sites/nosh2/log.log",json_encode($data)." ".json_encode($credentials));
 
             DB::table('practiceinfo')->where('practice_id', '=', Session::get('practice_id'))->update($data);
+
             return redirect()->route('setup_mail_test');
 
         } else {
