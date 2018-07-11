@@ -308,10 +308,14 @@ class LoginController extends Controller {
         $google->setScopes(array('https://mail.google.com/'));
 
         if (isset($_REQUEST["code"])) {
+
             $credentials = $google->authenticate($_GET['code']);
-            $data['google_refresh_token'] = isset($credentials['refresh_token']) ? $credentials['refresh_token'] : "" ;
+
+            $data['google_refresh_token'] = isset($credentials['refresh_token']) ? $credentials['refresh_token'] : $google->getRefreshToken() ;
+
             DB::table('practiceinfo')->where('practice_id', '=', Session::get('practice_id'))->update($data);
             return redirect()->route('setup_mail_test');
+
         } else {
             $authUrl = $google->createAuthUrl();
             header('Location: ' . filter_var($authUrl, FILTER_SANITIZE_URL));
