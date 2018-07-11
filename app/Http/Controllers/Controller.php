@@ -3179,21 +3179,17 @@ class Controller extends BaseController
 					// Check, if new key fits the actual .env-key
 					if($entry[0] == $key){
 						// If yes, overwrite it with the new one
-                        $value = str_replace('"','',$value);
-                        $value = '"'.$value.'"';
-						$env[$env_key] = $key . "=" . $value;
+                        $v = str_replace('"','',$value);
+                        $v = '"'.$v.'"';
+						$env[$env_key] = $key . "=" . $v;
                         $new = false;
 					} else {
-                        $env_value = str_replace('"','',$env_value);
-                        $env_value = '"'.$env_value.'"';
-						// If not, keep the old one
+                        // If not, keep the old one
 						$env[$env_key] = $env_value;
 					}
 				}
                 if ($new == true) {
-                    $value = str_replace('"','',$value);
-				    $value = '"'.$value.'"';
-					$env[$key] = $key . "=" . $value;
+                    $env[$key] = $key . "=" . $value;
 				}
 			}
 			// Turn the array back to an String
